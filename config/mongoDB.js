@@ -7,9 +7,9 @@ if (!MONGO_URI) {
 
 let isConnected = false;
 
-export const connectDB = async () => {
+const connectDB = async () => {
   if (isConnected) {
-    console.log("⚡ Using existing MongoDB connection");
+    console.log("Using existing MongoDB connection");
     return;
   }
 
@@ -26,3 +26,5 @@ export const connectDB = async () => {
     throw err;
   }
 };
+
+export default connectDB;
