@@ -1,8 +1,7 @@
 import express from 'express';
 import {
     register,
-    loginManual,
-    loginGoogle,
+    login,
     logout,
     resetPassword,
     sendOtpToEmail,
@@ -18,8 +17,7 @@ const authRouter = express.Router();
 authRouter.post('/register', registerValidation, register);
 
 // Login routes
-authRouter.post('/login/manual', loginValidation, loginManual); // Manual email/password login
-authRouter.post('/login/google', loginGoogle); // Google login
+authRouter.post('/login', loginValidation, login); // Manual email/password login
 
 // Logout
 authRouter.post('/logout', logout);

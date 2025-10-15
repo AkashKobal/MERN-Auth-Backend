@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import logger from "../utils/logger.js";
 
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
@@ -9,7 +10,7 @@ let isConnected = false;
 
 const connectDB = async () => {
   if (isConnected) {
-    console.log("Using existing MongoDB connection");
+    logger.info("Using existing MongoDB connection");
     return;
   }
 
@@ -20,9 +21,9 @@ const connectDB = async () => {
       serverSelectionTimeoutMS: 10000,
     });
     isConnected = true;
-    console.log(`MongoDB connected: ${conn.connection.host}`);
+    logger.info(`MongoDB connected to host: ${conn.connection.host}`);
   } catch (err) {
-    console.error("MongoDB connection error:", err.message);
+    logger.error(`MongoDB connection failed: ${err.message}`);
     throw err;
   }
 };
