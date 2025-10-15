@@ -457,61 +457,34 @@ export const isAuthenticated = async (req, res) => {
     }
 };
 
-// Middleware to check if user is authenticated
+
 export const authMiddleware = async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        // Try header first, then cookies
+        const token =
+            req.headers.authorization?.startsWith("Bearer ")
+                ? req.headers.authorization.split(" ")[1]
+                : req.cookies.token;
 
         if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: "Authentication token not found. Please log in."
-            });
+            return res.status(401).json({ success: false, message: "Authentication token not found." });
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        if (!decoded || !decoded.userId) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid authentication token."
-            });
-        }
-
-        const user = await userModel.findById(decoded.userId).select('-password');
+        const user = await userModel.findById(decoded.userId).select("-password");
 
         if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found."
-            });
+            return res.status(404).json({ success: false, message: "User not found." });
         }
 
-        // Add user to request object
         req.user = user;
         next();
     } catch (error) {
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid authentication token."
-            });
-        }
-
-        if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({
-                success: false,
-                message: "Authentication token expired. Please log in again."
-            });
-        }
-
-        console.error("Authentication middleware error:", error);
-        return res.status(500).json({
-            success: false,
-            message: "Server error during authentication check."
-        });
+        console.error("AuthMiddleware error:", error);
+        return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 };
+
 
 // Middleware to check if user is verified
 export const isVerified = (req, res, next) => {

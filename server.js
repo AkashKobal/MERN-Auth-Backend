@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/mongoDB.js';
 import authRouter from './Routes/authRoutes.js'
 import userRouter from './Routes/userRoutes.js'
+import adminRouter from './Routes/adminRoutes.js';
 
 
 
@@ -22,6 +23,7 @@ app.use(cors({ Credentials: true }));
 // API endpoints
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/admin', adminRouter);
 
 
 app.get('/', (req, res) => {
