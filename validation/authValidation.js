@@ -43,7 +43,7 @@ export const loginValidation = (req, res, next) => {
 /** ------------------ Verify OTP ------------------ **/
 export const otpValidation = (req, res, next) => {
     const schema = Joi.object({
-        userId: Joi.string().trim().required(),
+        email: Joi.string().trim().lowercase().email({ tlds: { allow: false } }).required(),
         otp: Joi.string().length(6).pattern(/^\d{6}$/).required(),
     });
     validateSchema(schema, req, res, next);
@@ -65,22 +65,4 @@ export const newPasswordValidation = (req, res, next) => {
         newPassword: Joi.string().min(3).max(50).required(),
     });
     validateSchema(schema, req, res, next);
-};
-
-/** ------------------ User Auth Middleware ------------------ **/
-export const userAuth = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    const token = authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
-
-    if (!token) {
-        return res.status(401).json({ success: false, message: "Unauthorized: Missing token" });
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = decoded.userId;
-        next();
-    } catch (err) {
-        return res.status(401).json({ success: false, message: "Unauthorized: Invalid or expired token" });
-    }
 };

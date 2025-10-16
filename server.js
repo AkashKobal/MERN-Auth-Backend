@@ -9,6 +9,7 @@ import connectDB from './config/mongoDB.js';
 import authRouter from './Routes/authRoutes.js';
 import userRouter from './Routes/userRoutes.js';
 import adminRouter from './Routes/adminRoutes.js';
+import emailRouter from './Routes/emailRoutes.js';
 
 
 const app = express();
@@ -45,6 +46,7 @@ app.use(cookieParser());
 
 // API routes
 app.use('/api/auth', authRouter);
+app.use('/api/email', emailRouter);
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);
 

@@ -1,5 +1,4 @@
 import express from "express";
-import { authMiddleware, isAdmin } from "../Controllers/authControllers.js";
 import {
     getAllUsers,
     getUserById,
@@ -7,6 +6,7 @@ import {
     deleteUser,
     searchUsers
 } from "../Controllers/adminController.js";
+import { authMiddleware, isAdmin } from "../Middleware/authMiddleware.js";
 
 const adminRouter = express.Router();
 
