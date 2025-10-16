@@ -10,6 +10,7 @@ import authRouter from './Routes/authRoutes.js';
 import userRouter from './Routes/userRoutes.js';
 import adminRouter from './Routes/adminRoutes.js';
 import emailRouter from './Routes/emailRoutes.js';
+import oAuthRoute from './Routes/oAuthRoutes.js';
 
 
 const app = express();
@@ -46,6 +47,7 @@ app.use(cookieParser());
 
 // API routes
 app.use('/api/auth', authRouter);
+app.use('/api/oauth', oAuthRoute);
 app.use('/api/email', emailRouter);
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);

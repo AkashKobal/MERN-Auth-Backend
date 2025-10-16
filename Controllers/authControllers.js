@@ -25,7 +25,7 @@ export const register = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            isAccountVerified: false, // always require email verification
+            isAccountVerified: false,
             roles: [{ authority: "USER" }],
         });
 
