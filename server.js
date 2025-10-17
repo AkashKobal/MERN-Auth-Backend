@@ -34,16 +34,8 @@ connectDB().catch(err => {
 // Helmet for security headers
 app.use(
     helmet({
-        crossOriginEmbedderPolicy: true,
-        crossOriginResourcePolicy: { policy: "cross-origin" },
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "https:"],
-                objectSrc: ["'none'"],
-                upgradeInsecureRequests: [],
-            },
-        },
+        crossOriginEmbedderPolicy: false,
+        crossOriginResourcePolicy: false,
     })
 );
 
