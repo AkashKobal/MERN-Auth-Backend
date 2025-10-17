@@ -14,7 +14,7 @@ import oAuthRoute from './Routes/oAuthRoutes.js';
 
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || 'localhost';
 const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
 
@@ -37,7 +37,7 @@ app.use(limiter);
 
 // CORS
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 
