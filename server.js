@@ -68,7 +68,7 @@ app.use(compression()); // gzip compression for faster responses
 // ---------------------- CORS ----------------------
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://your-production-domain.com'
+    'https://mern-auth-frontend-nine-ashy.vercel.app'
 ];
 
 app.use(cors({
